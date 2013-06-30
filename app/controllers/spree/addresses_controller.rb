@@ -2,7 +2,7 @@ class Spree::AddressesController < Spree::StoreController
   helper Spree::AddressesHelper
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   load_and_authorize_resource :class => Spree::Address
-  
+
   def edit
     session["user_return_to"] = request.env['HTTP_REFERER']
   end
@@ -24,7 +24,7 @@ class Spree::AddressesController < Spree::StoreController
   end
 
   def create
-    @address.user = current_user
+    @address.user = spree_current_user
     if @address.save
       flash[:notice] = I18n.t(:successfully_created, :resource => I18n.t(:address))
       redirect_to account_path
